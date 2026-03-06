@@ -1,0 +1,10 @@
+#!/bin/bash
+{{ if eq .chezmoi.os "linux" -}}
+if grep -qi microsoft /proc/version 2>/dev/null; then
+  WIN_USER=$(powershell.exe -Command "echo \$env:USERNAME" | tr -d '\r')
+  WIN_CONFIG="/mnt/c/Users/${WIN_USER}/AppData/Roaming/alacritty"
+  mkdir -p "$WIN_CONFIG"
+  cp ~/.config/alacritty/alacritty.toml "$WIN_CONFIG/alacritty.toml"
+  echo "✓ Alacritty config nach Windows kopiert"
+fi
+{{ end -}}
